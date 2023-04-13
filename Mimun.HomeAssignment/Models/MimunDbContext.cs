@@ -39,6 +39,15 @@ public partial class MimunDbContext : DbContext
 
             entity.Property(e => e.ContractNumber).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.Contracts)
+                .HasForeignKey(d => d.CustomerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Contract_Customer");
+
+            entity.HasOne(d => d.Type).WithMany(p => p.Contracts)
+                .HasForeignKey(d => d.TypeId)
+                .HasConstraintName("FK_Contract_ContractType");
         });
 
         modelBuilder.Entity<ContractType>(entity =>
@@ -71,6 +80,16 @@ public partial class MimunDbContext : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.PackageName).HasMaxLength(50);
+
+            entity.HasOne(d => d.Contract).WithMany(p => p.Packages)
+                .HasForeignKey(d => d.ContractId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Package_Contract");
+
+            entity.HasOne(d => d.PackageType).WithMany(p => p.Packages)
+                .HasForeignKey(d => d.PackageTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Package_PackageType");
         });
 
         modelBuilder.Entity<PackageType>(entity =>

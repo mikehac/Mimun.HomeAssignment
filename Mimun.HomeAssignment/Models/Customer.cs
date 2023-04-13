@@ -20,4 +20,6 @@ public partial class Customer
     public string? HouseNumber { get; set; }
 
     public string? PostalCode { get; set; }
+
+    public virtual ICollection<Contract> Contracts { get; set; } = new List<Contract>();
 }

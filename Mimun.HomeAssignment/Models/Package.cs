@@ -16,4 +16,8 @@ public partial class Package
     public int? TotalUsed { get; set; }
 
     public int ContractId { get; set; }
+
+    public virtual Contract Contract { get; set; } = null!;
+
+    public virtual PackageType PackageType { get; set; } = null!;
 }

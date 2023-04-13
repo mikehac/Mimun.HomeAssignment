@@ -14,4 +14,10 @@ public partial class Contract
     public int? TypeId { get; set; }
 
     public int CustomerId { get; set; }
+
+    public virtual Customer Customer { get; set; } = null!;
+
+    public virtual ICollection<Package> Packages { get; set; } = new List<Package>();
+
+    public virtual ContractType? Type { get; set; }
 }

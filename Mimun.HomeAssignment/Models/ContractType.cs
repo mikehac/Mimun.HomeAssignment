@@ -8,4 +8,6 @@ public partial class ContractType
     public int Id { get; set; }
 
     public string Type { get; set; } = null!;
+
+    public virtual ICollection<Contract> Contracts { get; set; } = new List<Contract>();
 }
