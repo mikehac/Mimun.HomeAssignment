@@ -16,6 +16,11 @@ export class ManagmentService {
     let queryUrl = this.baseUrl + 'Customer?idNumber=' + idNumber;
     return this.http.get<response>(queryUrl);
   }
+
+  public getPackage(packageId: number) {
+    let queryUrl = this.baseUrl + 'Package?packageId=' + packageId;
+    return this.http.get<Package[]>(queryUrl);
+  }
 }
 
 export interface response {
@@ -43,4 +48,12 @@ export interface contract {
   typeId: number;
   customerId: number;
   typeName: string;
+}
+export interface Package {
+  id: number;
+  packageName: string;
+  packageTypeId: number;
+  amount: number;
+  totalUsed: number;
+  contractId: number;
 }

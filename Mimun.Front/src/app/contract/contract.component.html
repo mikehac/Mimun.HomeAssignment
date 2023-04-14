@@ -1,0 +1,33 @@
+<table mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length > 0">
+  <ng-component matColumnDef="contractNumber">
+    <th mat-header-cell *matHeaderCellDef>Contract Number</th>
+    <td mat-cell *matCellDef="let element">{{ element.contractNumber }}</td>
+  </ng-component>
+
+  <ng-component matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-component>
+
+  <ng-component matColumnDef="typeId">
+    <th mat-header-cell *matHeaderCellDef>Type Id</th>
+    <td mat-cell *matCellDef="let element">{{ element.typeId }}</td>
+  </ng-component>
+
+  <ng-component matColumnDef="customerId">
+    <th mat-header-cell *matHeaderCellDef>Customer Id</th>
+    <td mat-cell *matCellDef="let element">{{ element.customerId }}</td>
+  </ng-component>
+
+  <ng-component matColumnDef="typeName">
+    <th mat-header-cell *matHeaderCellDef>Type Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.typeName }}</td>
+  </ng-component>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    (click)="onClickRow(row.id)"
+  ></tr>
+</table>

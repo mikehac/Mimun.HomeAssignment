@@ -20,3 +20,14 @@
     Postal Code:<input type="text" [(ngModel)]="custumer.address.postalCode" />
   </div>
 </section>
+<section *ngIf="custumerIsValid()">
+  <h2>Customer's Contracts</h2>
+  <contract
+    [contracts]="contracts"
+    (selectedContractId)="onSelectContractId($event)"
+  ></contract>
+</section>
+<section *ngIf="packages != null && packages.length > 0">
+  <h2>Selected Contract's packages</h2>
+  <package [packages]="packages"></package>
+</section>
