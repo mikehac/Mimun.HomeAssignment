@@ -47,6 +47,7 @@ public partial class MimunDbContext : DbContext
 
             entity.HasOne(d => d.Type).WithMany(p => p.Contracts)
                 .HasForeignKey(d => d.TypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Contract_ContractType");
         });
 

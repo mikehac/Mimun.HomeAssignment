@@ -11,7 +11,7 @@ public partial class Contract
 
     public string Name { get; set; } = null!;
 
-    public int? TypeId { get; set; }
+    public int TypeId { get; set; }
 
     public int CustomerId { get; set; }
 
@@ -19,5 +19,5 @@ public partial class Contract
 
     public virtual ICollection<Package> Packages { get; set; } = new List<Package>();
 
-    public virtual ContractType? Type { get; set; }
+    public virtual ContractType Type { get; set; } = null!;
 }
