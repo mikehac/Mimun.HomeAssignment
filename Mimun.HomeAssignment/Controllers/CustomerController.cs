@@ -8,7 +8,7 @@ namespace Mimun.HomeAssignment.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        ICustomerRepository _customerRepository;
+        readonly ICustomerRepository _customerRepository;
 
         public CustomerController(ICustomerRepository customerRepository)
         {

@@ -17,6 +17,7 @@ namespace Mimun.HomeAssignment.Extensions
         public static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IContractRepository, ContractRepository>();
         }
     }
 }

@@ -8,8 +8,10 @@
 
         public string Name { get; set; } = null!;
 
-        public int? TypeId { get; set; }
+        public int TypeId { get; set; }
 
         public int CustomerId { get; set; }
+
+        public string TypeName { get; set; }
     }
 }

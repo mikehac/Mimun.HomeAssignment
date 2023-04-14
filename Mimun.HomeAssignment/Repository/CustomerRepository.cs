@@ -24,6 +24,7 @@ namespace Mimun.HomeAssignment.Repository
             {
                 response.Customer = _mapper.Map<CustomerDto>(customer);
                 var contracts = await _context.Contracts.Where(x => x.CustomerId == customer.Id)
+                    .Include(x => x.Type)
                     .ToArrayAsync();
                 if (contracts.Any())
                 {
