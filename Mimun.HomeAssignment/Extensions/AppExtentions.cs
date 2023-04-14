@@ -18,6 +18,7 @@ namespace Mimun.HomeAssignment.Extensions
         {
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IContractRepository, ContractRepository>();
+            services.AddScoped<IPackageRepository, PackageRepository>();
         }
     }
 }

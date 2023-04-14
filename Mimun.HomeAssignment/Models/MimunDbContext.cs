@@ -79,7 +79,6 @@ public partial class MimunDbContext : DbContext
         {
             entity.ToTable("Package");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.PackageName).HasMaxLength(50);
 
             entity.HasOne(d => d.Contract).WithMany(p => p.Packages)
