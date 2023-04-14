@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mimun.HomeAssignment.DTOs;
 using Mimun.HomeAssignment.Repository;
 
 namespace Mimun.HomeAssignment.Controllers
@@ -8,7 +9,7 @@ namespace Mimun.HomeAssignment.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        ICustomerRepository _customerRepository;
+        readonly ICustomerRepository _customerRepository;
 
         public CustomerController(ICustomerRepository customerRepository)
         {
@@ -20,6 +21,15 @@ namespace Mimun.HomeAssignment.Controllers
         {
             var response = await _customerRepository.GetByIdNumber(idNumber);
             return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] AddressDto address)
+        {
+            var updateResult = await _customerRepository.UpdateAddress(address);
+            if (!updateResult)
+                return NotFound();
+            return NoContent();
         }
     }
 }

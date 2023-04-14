@@ -24,6 +24,7 @@ namespace Mimun.HomeAssignment.Repository
             {
                 response.Customer = _mapper.Map<CustomerDto>(customer);
                 var contracts = await _context.Contracts.Where(x => x.CustomerId == customer.Id)
+                    .Include(x => x.Type)
                     .ToArrayAsync();
                 if (contracts.Any())
                 {
@@ -32,6 +33,20 @@ namespace Mimun.HomeAssignment.Repository
             }
 
             return response;
+        }
+
+        public async Task<bool> UpdateAddress(AddressDto address)
+        {
+            var customer = await _context.Customers.SingleOrDefaultAsync(x => x.Id == address.CustomerId);
+            if (customer == null)
+                return false;
+            customer.City = address.City;
+            customer.Street = address.Street;
+            customer.HouseNumber = address.HouseNumber;
+            customer.PostalCode = address.PostalCode;
+            if (await _context.SaveChangesAsync() > 0)
+                return true;
+            return false;
         }
     }
 }
