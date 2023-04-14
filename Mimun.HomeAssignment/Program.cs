@@ -1,5 +1,6 @@
 using AutoMapper;
 using Mimun.HomeAssignment.Extensions;
+using Mimun.HomeAssignment.Middleware;
 using Mimun.HomeAssignment.ServicesConfig;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseMiddleware<ErrorHandler>();
 
 app.MapControllers();
 app.UseCors(x =>
