@@ -12,7 +12,7 @@ import {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  idNumber: string = '';
+  idNumber: string = '303456891';
   custumer: customer;
   contracts: contract[];
   packages: Package[];
