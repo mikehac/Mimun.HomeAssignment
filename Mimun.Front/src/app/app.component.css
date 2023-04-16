@@ -11,6 +11,9 @@
   width: 800px;
   margin: auto;
 }
+.loginWrapper {
+  margin-bottom: 10px;
+}
 h2,
 h3 {
   padding-left: 15px;

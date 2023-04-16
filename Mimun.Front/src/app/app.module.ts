@@ -4,11 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContractComponent } from './contract/contract.component';
 import { AppMaterialModule } from './app.material.module';
 import { PackageComponent } from './package/package.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [AppComponent, ContractComponent, PackageComponent],
   imports: [
@@ -17,6 +18,9 @@ import { PackageComponent } from './package/package.component';
     HttpClientModule,
     FormsModule,
     AppMaterialModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

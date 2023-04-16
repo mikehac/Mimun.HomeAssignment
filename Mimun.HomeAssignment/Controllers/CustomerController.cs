@@ -28,8 +28,8 @@ namespace Mimun.HomeAssignment.Controllers
         {
             var updateResult = await _customerRepository.UpdateAddress(address);
             if (!updateResult)
-                return NotFound();
-            return NoContent();
+                return Accepted(new { updated = false });
+            return Accepted(new { updated = true });
         }
     }
 }

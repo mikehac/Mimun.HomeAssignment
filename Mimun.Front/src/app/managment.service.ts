@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,15 @@ export class ManagmentService {
     let queryUrl = this.baseUrl + 'Package?packageId=' + packageId;
     return this.http.get<Package[]>(queryUrl);
   }
+
+  public updateAddress(newAddress: address) {
+    let queryUrl = this.baseUrl + 'Customer';
+    return this.http.put<address>(queryUrl, newAddress).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
 }
 
 export interface response {
@@ -35,6 +45,7 @@ export interface customer {
   address: address;
 }
 export interface address {
+  [x: string]: any;
   customerId: number;
   city: string;
   street: string;
