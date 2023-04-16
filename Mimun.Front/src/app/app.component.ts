@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   ManagmentService,
   Package,
@@ -14,12 +14,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   idNumber: string = '303456891';
   custumer: customer;
   contracts: contract[];
   packages: Package[];
   form: FormGroup;
+  oldAddress: address;
+  addressIsDirty: boolean;
 
   constructor(
     private service: ManagmentService,
@@ -39,12 +41,49 @@ export class AppComponent {
         postalCode: '',
       },
     };
+  }
+  ngOnInit(): void {
     this.form = this.formBuilder.group({
       city: this.formBuilder.control(''),
       street: this.formBuilder.control(''),
       houseNumber: this.formBuilder.control(''),
       postalCode: this.formBuilder.control(''),
     });
+    this.onChanges();
+  }
+
+  onChanges(): void {
+    this.form.valueChanges.subscribe((val: address) => {
+      if (
+        this.oldAddress === undefined &&
+        val.city !== '' &&
+        val.street !== '' &&
+        val.houseNumber !== '' &&
+        val.postalCode !== ''
+      ) {
+        this.oldAddress = val;
+        console.log(this.oldAddress);
+      } else if (this.oldAddress !== undefined) {
+        if (this.addressesAreSame(val)) {
+          this.addressIsDirty = false;
+          // console.log('not changed');
+        } else {
+          this.addressIsDirty = true;
+          // console.log('changed');
+        }
+      }
+    });
+  }
+  addressesAreSame(newAddress: address): boolean {
+    if (
+      newAddress.city === this.oldAddress.city &&
+      newAddress.street === this.oldAddress.street &&
+      newAddress.houseNumber === this.oldAddress.houseNumber &&
+      newAddress.postalCode === this.oldAddress.postalCode
+    ) {
+      return true;
+    }
+    return false;
   }
 
   private loadAddress(address: address) {
