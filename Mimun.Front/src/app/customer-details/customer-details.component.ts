@@ -76,14 +76,11 @@ export class CustomerDetailsComponent implements OnInit {
         val.postalCode !== ''
       ) {
         this.oldAddress = val;
-        console.log(this.oldAddress);
       } else if (this.oldAddress !== undefined) {
         if (this.addressesAreSame(val)) {
           this.addressIsDirty = false;
-          // console.log('not changed');
         } else {
           this.addressIsDirty = true;
-          // console.log('changed');
         }
       }
     });
@@ -121,16 +118,13 @@ export class CustomerDetailsComponent implements OnInit {
 
   onSelectContractId(selectedContractId: number) {
     this.service.getPackage(selectedContractId).subscribe((g) => {
-      console.log(g);
       this.packages = g;
     });
   }
 
   onSubmit(newAddress: address) {
-    // console.log(newAddress);
     newAddress.customerId = this.custumer.id;
     this.service.updateAddress(newAddress).subscribe((response) => {
-      console.log(response);
       if (response['updated']) {
         this.openSnackBar('The address updated successfully');
       } else {
