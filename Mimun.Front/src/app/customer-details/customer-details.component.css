@@ -1,0 +1,32 @@
+h2,
+h3 {
+  padding-left: 15px;
+  color: #ffffff;
+  background-color: #000;
+  /* text-align: center; */
+}
+section {
+  margin-bottom: 10px;
+}
+section div {
+  color: #ffffff;
+}
+
+.customerDetails span {
+  display: inline-block;
+  width: 100%;
+}
+
+.customerDetails input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 34px;
+  border-radius: 4px;
+}
+
+a,
+a:hover {
+  float: right;
+  color: #ffffff;
+  cursor: pointer;
+}

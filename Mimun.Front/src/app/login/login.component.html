@@ -1,0 +1,11 @@
+<h3>Login</h3>
+
+<div class="loginWrapper">
+  <input
+    type="text"
+    placeholder="Please enter Id Number"
+    [(ngModel)]="idNumber"
+  />
+  <button (click)="onClick()">Login</button>&nbsp;
+  <span *ngIf="showError">No such Id number</span>
+</div>

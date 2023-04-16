@@ -17,8 +17,14 @@ namespace Mimun.HomeAssignment.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(string idNumber) 
+        public async Task<IActionResult> Get(string idNumber, bool customerExistsCheck = false)
         {
+            if (customerExistsCheck)
+            {
+                bool customerExists = await _customerRepository.CustomerExists(idNumber);
+                return Ok(customerExists);
+            }
+
             var response = await _customerRepository.GetByIdNumber(idNumber);
             return Ok(response);
         }

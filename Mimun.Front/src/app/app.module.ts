@@ -10,8 +10,17 @@ import { AppMaterialModule } from './app.material.module';
 import { PackageComponent } from './package/package.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './login/login.component';
+import { CustomerDetailsComponent } from './customer-details/customer-details.component';
+import { routing } from './app.routing';
 @NgModule({
-  declarations: [AppComponent, ContractComponent, PackageComponent],
+  declarations: [
+    AppComponent,
+    ContractComponent,
+    PackageComponent,
+    LoginComponent,
+    CustomerDetailsComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,6 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     MatSnackBarModule,
     BrowserAnimationsModule,
+    routing,
   ],
   providers: [],
   bootstrap: [AppComponent],

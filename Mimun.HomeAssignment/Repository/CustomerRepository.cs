@@ -16,6 +16,12 @@ namespace Mimun.HomeAssignment.Repository
             _mapper = mapper;
         }
 
+        public async Task<bool> CustomerExists(string idNumber)
+        {
+            var customer = await _context.Customers.SingleOrDefaultAsync(x => x.IdNumber == idNumber);
+            return customer != null ? true : false;
+        }
+
         public async Task<CustomerResponse> GetByIdNumber(string idNumber)
         {
             CustomerResponse response = new CustomerResponse();

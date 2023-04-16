@@ -1,0 +1,14 @@
+.loginWrapper {
+  margin-bottom: 10px;
+}
+h2,
+h3 {
+  padding-left: 15px;
+  color: #ffffff;
+  background-color: #000;
+  /* text-align: center; */
+}
+
+span {
+  color: red;
+}

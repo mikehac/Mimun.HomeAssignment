@@ -13,6 +13,14 @@ export class ManagmentService {
     this.baseUrl = environment.apiUrl;
   }
 
+  public CustomerExists(idNumber: string) {
+    let queryUrl =
+      this.baseUrl +
+      'Customer?idNumber=' +
+      idNumber +
+      '&customerExistsCheck=true';
+    return this.http.get(queryUrl);
+  }
   public getCustomer(idNumber: string) {
     let queryUrl = this.baseUrl + 'Customer?idNumber=' + idNumber;
     return this.http.get<response>(queryUrl);
