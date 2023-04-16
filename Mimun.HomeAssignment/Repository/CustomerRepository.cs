@@ -24,10 +24,11 @@ namespace Mimun.HomeAssignment.Repository
 
         public async Task<CustomerResponse> GetByIdNumber(string idNumber)
         {
-            CustomerResponse response = new CustomerResponse();
+            CustomerResponse? response = null;
             var customer = await _context.Customers.SingleOrDefaultAsync(x => x.IdNumber == idNumber);
             if (customer != null)
             {
+                response = new CustomerResponse();
                 response.Customer = _mapper.Map<CustomerDto>(customer);
                 var contracts = await _context.Contracts.Where(x => x.CustomerId == customer.Id)
                     .Include(x => x.Type)

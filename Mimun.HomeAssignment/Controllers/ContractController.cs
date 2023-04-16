@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Mimun.HomeAssignment.DTOs;
+using Mimun.HomeAssignment.Extensions;
 using Mimun.HomeAssignment.Repository;
+using System.Collections.Generic;
 
 namespace Mimun.HomeAssignment.Controllers
 {
@@ -9,15 +13,18 @@ namespace Mimun.HomeAssignment.Controllers
     public class ContractController : ControllerBase
     {
         readonly IContractRepository _contractRepository;
-        public ContractController(IContractRepository contractRepository)
+        readonly IMemoryCache _cache;
+        public ContractController(IContractRepository contractRepository, IMemoryCache cache)
         {
             _contractRepository = contractRepository;
+            _cache = cache;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get(int customerId)
         {
-            var contracts = await _contractRepository.GetContractsByCustomer(customerId);
+            string cacheKey = $"contract_{customerId}";
+            var contracts = await _cache.GetFromCache<IEnumerable<ContractDto>>(cacheKey, () => _contractRepository.GetContractsByCustomer(customerId));
             if (contracts == null)
             {
                 return NotFound();
