@@ -13,5 +13,6 @@
         public int? TotalUsed { get; set; }
 
         public int ContractId { get; set; }
+        public string PackageTypeName { get; set; }
     }
 }

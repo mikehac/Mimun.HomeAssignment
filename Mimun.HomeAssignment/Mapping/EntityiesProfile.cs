@@ -18,7 +18,9 @@ namespace Mimun.HomeAssignment.Mapping
             CreateMap<Contract, ContractDto>()
                 .ForMember(m => m.TypeName, o => o.MapFrom(x => x.Type.Type))
                 .ReverseMap();
-            CreateMap<Package, PackageDto>().ReverseMap();
+            CreateMap<Package, PackageDto>()
+                .ForMember(m => m.PackageTypeName, o => o.MapFrom(x => x.PackageType.TypeName))
+                .ReverseMap();
         }
     }
 }

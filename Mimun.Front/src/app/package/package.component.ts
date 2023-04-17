@@ -10,7 +10,12 @@ import { MatTableDataSource } from '@angular/material/table';
 export class PackageComponent implements OnInit {
   @Input() packages: Package[];
   public dataSource = new MatTableDataSource<Package>();
-  public displayedColumns = ['packageName', 'amount', 'totalUsed'];
+  public displayedColumns = [
+    'packageName',
+    'packageTypeName',
+    'amount',
+    'totalUsed',
+  ];
   ngOnInit(): void {
     this.dataSource.data.push({
       id: 0,
@@ -19,6 +24,7 @@ export class PackageComponent implements OnInit {
       amount: 0,
       totalUsed: 0,
       contractId: 0,
+      packageTypeName: '',
     });
   }
 

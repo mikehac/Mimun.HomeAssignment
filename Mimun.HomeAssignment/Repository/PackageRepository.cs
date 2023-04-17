@@ -18,7 +18,9 @@ namespace Mimun.HomeAssignment.Repository
 
         public async Task<IEnumerable<PackageDto>> GetPackageByContractId(int contractId)
         {
-            var packages = await _context.Packages.Where(x => x.ContractId == contractId).ToListAsync();
+            var packages = await _context.Packages.Where(x => x.ContractId == contractId)
+                .Include(x => x.PackageType)
+                .ToListAsync();
 
             return _mapper.Map<List<PackageDto>>(packages);
         }

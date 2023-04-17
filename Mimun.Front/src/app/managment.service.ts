@@ -13,21 +13,18 @@ export class ManagmentService {
     this.baseUrl = environment.apiUrl;
   }
 
-  private getHttpOptions(token: string): object{
-      let httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token,
-          }),
-        };
+  private getHttpOptions(token: string): object {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      }),
+    };
     return httpOptions;
   }
 
   public CustomerExists(idNumber: string) {
-    let queryUrl =
-      this.baseUrl +
-      'Customer/Login?idNumber=' +
-      idNumber;
+    let queryUrl = this.baseUrl + 'Customer/Login?idNumber=' + idNumber;
     return this.http.get<loginResponse>(queryUrl);
   }
 
@@ -44,11 +41,13 @@ export class ManagmentService {
   public updateAddress(newAddress: address, token: string) {
     let queryUrl = this.baseUrl + 'Customer';
 
-    return this.http.put<address>(queryUrl, newAddress, this.getHttpOptions(token)).pipe(
-      map((response) => {
-        return response;
-      })
-    );
+    return this.http
+      .put<address>(queryUrl, newAddress, this.getHttpOptions(token))
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
   }
 }
 
@@ -86,6 +85,7 @@ export interface Package {
   amount: number;
   totalUsed: number;
   contractId: number;
+  packageTypeName: string;
 }
 
 export interface loginResponse {
