@@ -7,5 +7,6 @@
     [(ngModel)]="idNumber"
   />
   <button (click)="onClick()">Login</button>&nbsp;
-  <span *ngIf="showError">No such Id number</span>
+  <span *ngIf="showCustomerNotExistError">No such Id number</span>
+  <span *ngIf="!idNumberIsValid">Id number is not valid</span>
 </div>

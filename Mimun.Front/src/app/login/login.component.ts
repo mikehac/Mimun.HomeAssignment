@@ -9,15 +9,33 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   idNumber: string = '';
-  showError: boolean = false;
+  showCustomerNotExistError: boolean = false;
+  idNumberIsValid: boolean = true;
   constructor(private service: ManagmentService, private router: Router) {}
   onClick() {
-    this.service.CustomerExists(this.idNumber).subscribe((g) => {
-      if (g) {
+    if (!this.isIsraeliIdNumber(this.idNumber)) {
+      this.idNumberIsValid = false;
+      return;
+    }
+    this.service.CustomerExists(this.idNumber).subscribe((response) => {
+      if (response) {
         this.router.navigate(['/customerDetails', this.idNumber]);
       } else {
-        this.showError = true;
+        this.showCustomerNotExistError = true;
       }
     });
+  }
+  isIsraeliIdNumber(id: string) {
+    id = String(id).trim();
+    if (id.length > 9) return false;
+    id = id.length < 9 ? ('00000000' + id).slice(-9) : id;
+    return (
+      Array.from(id, Number).reduce((counter, digit, i) => {
+        const step = digit * ((i % 2) + 1);
+        return counter + (step > 9 ? step - 9 : step);
+      }) %
+        10 ===
+      0
+    );
   }
 }
