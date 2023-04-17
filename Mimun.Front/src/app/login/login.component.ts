@@ -18,7 +18,7 @@ export class LoginComponent {
       return;
     }
     this.service.CustomerExists(this.idNumber).subscribe((response) => {
-      if (response) {
+      if (response.customerExist) {
         this.router.navigate(['/customerDetails', this.idNumber]);
       } else {
         this.showCustomerNotExistError = true;

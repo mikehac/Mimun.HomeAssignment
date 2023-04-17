@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Mimun.HomeAssignment.DTOs;
 using Mimun.HomeAssignment.Extensions;
 using Mimun.HomeAssignment.Repository;
+using Mimun.HomeAssignment.Services;
 
 namespace Mimun.HomeAssignment.Controllers
 {
@@ -12,22 +14,40 @@ namespace Mimun.HomeAssignment.Controllers
     public class CustomerController : ControllerBase
     {
         readonly ICustomerRepository _customerRepository;
+        readonly IAuthService _authService;
         readonly IMemoryCache _cache;
-        public CustomerController(ICustomerRepository customerRepository, IMemoryCache cache)
+        public CustomerController(ICustomerRepository customerRepository, IAuthService authService, IMemoryCache cache)
         {
             _customerRepository = customerRepository;
+            _authService = authService;
             _cache = cache;
         }
 
+        [HttpGet("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(string idNumber)
+        {
+            string customerExistKey = $"customerExist_{idNumber}";
+            bool customerExists = await _cache.GetFromCache<bool>(customerExistKey, () => _customerRepository.CustomerExists(idNumber));
+            if (!customerExists)
+            {
+                return NotFound();
+            }
+
+            string token = _authService.GetToken(idNumber);
+            return Ok(new { customerExist = customerExists, token });
+        }
+
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(string idNumber, bool customerExistsCheck = false)
         {
             if (customerExistsCheck)
             {
                 string customerExistKey = $"customerExist_{idNumber}";
                 bool customerExists = await _cache.GetFromCache<bool>(customerExistKey, () => _customerRepository.CustomerExists(idNumber));
-                
-                return Ok(customerExists);
+                string token = _authService.GetToken(idNumber);
+                return Ok(new { customerExist = customerExists, token });
             }
 
             CustomerResponse response = await _cache.GetFromCache<CustomerResponse>(idNumber, () => _customerRepository.GetByIdNumber(idNumber));
@@ -35,6 +55,7 @@ namespace Mimun.HomeAssignment.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Put([FromBody] AddressDto address)
         {
             var updateResult = await _customerRepository.UpdateAddress(address);

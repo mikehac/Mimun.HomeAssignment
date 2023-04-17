@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 
@@ -19,7 +19,7 @@ export class ManagmentService {
       'Customer?idNumber=' +
       idNumber +
       '&customerExistsCheck=true';
-    return this.http.get(queryUrl);
+    return this.http.get<loginResponse>(queryUrl);
   }
   public getCustomer(idNumber: string) {
     let queryUrl = this.baseUrl + 'Customer?idNumber=' + idNumber;
@@ -32,7 +32,14 @@ export class ManagmentService {
   }
 
   public updateAddress(newAddress: address) {
+    //, token: string) {
     let queryUrl = this.baseUrl + 'Customer';
+    // let httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + token,
+    //   }),
+    // };
     return this.http.put<address>(queryUrl, newAddress).pipe(
       map((response) => {
         return response;
@@ -75,4 +82,9 @@ export interface Package {
   amount: number;
   totalUsed: number;
   contractId: number;
+}
+
+export interface loginResponse {
+  customerExist: boolean;
+  token: string;
 }
