@@ -17,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CustomerDetailsComponent implements OnInit {
   idNumber: string = '';
+  token: string = '';
   custumer: customer;
   contracts: contract[];
   packages: Package[];
@@ -49,7 +50,8 @@ export class CustomerDetailsComponent implements OnInit {
 
     this.route.params.subscribe((params: Params) => {
       this.idNumber = params['idNumber'];
-      this.service.getCustomer(this.idNumber).subscribe((g) => {
+      this.token = params['token'];
+      this.service.getCustomer(this.idNumber, this.token).subscribe((g) => {
         this.custumer = g.customer;
         this.contracts = g.contracts;
         this.loadAddress(this.custumer.address);
@@ -117,14 +119,14 @@ export class CustomerDetailsComponent implements OnInit {
   }
 
   onSelectContractId(selectedContractId: number) {
-    this.service.getPackage(selectedContractId).subscribe((g) => {
+    this.service.getPackage(selectedContractId, this.token).subscribe((g) => {
       this.packages = g;
     });
   }
 
   onSubmit(newAddress: address) {
     newAddress.customerId = this.custumer.id;
-    this.service.updateAddress(newAddress).subscribe((response) => {
+    this.service.updateAddress(newAddress, this.token).subscribe((response) => {
       if (response['updated']) {
         this.openSnackBar('The address updated successfully');
       } else {

@@ -4,7 +4,7 @@ import { CustomerDetailsComponent } from './customer-details/customer-details.co
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'customerDetails/:idNumber', component: CustomerDetailsComponent },
+  { path: 'customerDetails/:idNumber/:token', component: CustomerDetailsComponent },
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

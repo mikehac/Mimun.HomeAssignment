@@ -13,34 +13,38 @@ export class ManagmentService {
     this.baseUrl = environment.apiUrl;
   }
 
+  private getHttpOptions(token: string): object{
+      let httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          }),
+        };
+    return httpOptions;
+  }
+
   public CustomerExists(idNumber: string) {
     let queryUrl =
       this.baseUrl +
-      'Customer?idNumber=' +
-      idNumber +
-      '&customerExistsCheck=true';
+      'Customer/Login?idNumber=' +
+      idNumber;
     return this.http.get<loginResponse>(queryUrl);
   }
-  public getCustomer(idNumber: string) {
+
+  public getCustomer(idNumber: string, token: string) {
     let queryUrl = this.baseUrl + 'Customer?idNumber=' + idNumber;
-    return this.http.get<response>(queryUrl);
+    return this.http.get<response>(queryUrl, this.getHttpOptions(token));
   }
 
-  public getPackage(packageId: number) {
+  public getPackage(packageId: number, token: string) {
     let queryUrl = this.baseUrl + 'Package?packageId=' + packageId;
-    return this.http.get<Package[]>(queryUrl);
+    return this.http.get<Package[]>(queryUrl, this.getHttpOptions(token));
   }
 
-  public updateAddress(newAddress: address) {
-    //, token: string) {
+  public updateAddress(newAddress: address, token: string) {
     let queryUrl = this.baseUrl + 'Customer';
-    // let httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     Authorization: 'Bearer ' + token,
-    //   }),
-    // };
-    return this.http.put<address>(queryUrl, newAddress).pipe(
+
+    return this.http.put<address>(queryUrl, newAddress, this.getHttpOptions(token)).pipe(
       map((response) => {
         return response;
       })

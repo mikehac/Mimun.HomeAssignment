@@ -11,6 +11,7 @@ namespace Mimun.HomeAssignment.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         readonly ICustomerRepository _customerRepository;
@@ -39,23 +40,13 @@ namespace Mimun.HomeAssignment.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Get(string idNumber, bool customerExistsCheck = false)
         {
-            if (customerExistsCheck)
-            {
-                string customerExistKey = $"customerExist_{idNumber}";
-                bool customerExists = await _cache.GetFromCache<bool>(customerExistKey, () => _customerRepository.CustomerExists(idNumber));
-                string token = _authService.GetToken(idNumber);
-                return Ok(new { customerExist = customerExists, token });
-            }
-
             CustomerResponse response = await _cache.GetFromCache<CustomerResponse>(idNumber, () => _customerRepository.GetByIdNumber(idNumber));
             return Ok(response);
         }
 
         [HttpPut]
-        [Authorize]
         public async Task<IActionResult> Put([FromBody] AddressDto address)
         {
             var updateResult = await _customerRepository.UpdateAddress(address);

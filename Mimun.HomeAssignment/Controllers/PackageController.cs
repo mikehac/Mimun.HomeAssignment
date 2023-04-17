@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Mimun.HomeAssignment.DTOs;
@@ -10,6 +11,7 @@ namespace Mimun.HomeAssignment.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PackageController : ControllerBase
     {
         readonly IPackageRepository _packageRepository;
