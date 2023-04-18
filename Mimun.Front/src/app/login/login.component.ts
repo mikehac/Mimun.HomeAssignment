@@ -17,13 +17,26 @@ export class LoginComponent {
       this.idNumberIsValid = false;
       return;
     }
-    this.service.CustomerExists(this.idNumber).subscribe((response) => {
-      if (response.customerExist) {
-        this.router.navigate(['/customerDetails', this.idNumber, response.token]);
-      } else {
-        this.showCustomerNotExistError = true;
+    this.idNumberIsValid = true;
+    this.service.CustomerExists(this.idNumber).subscribe(
+      (response) => {
+        if (response.customerExist) {
+          this.router.navigate([
+            '/customerDetails',
+            this.idNumber,
+            response.token,
+          ]);
+        } else {
+          this.showCustomerNotExistError = true;
+        }
+      },
+      (err) => {
+        console.log(err);
+        if (err.status === 404) {
+          this.showCustomerNotExistError = true;
+        }
       }
-    });
+    );
   }
   isIsraeliIdNumber(id: string) {
     id = String(id).trim();
