@@ -51,11 +51,19 @@ export class CustomerDetailsComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.idNumber = params['idNumber'];
       this.token = params['token'];
-      this.service.getCustomer(this.idNumber, this.token).subscribe((g) => {
-        this.custumer = g.customer;
-        this.contracts = g.contracts;
-        this.loadAddress(this.custumer.address);
-      });
+      this.service.getCustomer(this.idNumber, this.token).subscribe(
+        (g) => {
+          this.custumer = g.customer;
+          this.contracts = g.contracts;
+          this.loadAddress(this.custumer.address);
+        },
+        (err) => {
+          console.log(err);
+          if (err.status === 401) {
+            this.router.navigate(['']);
+          }
+        }
+      );
     });
   }
   initForm(): void {
